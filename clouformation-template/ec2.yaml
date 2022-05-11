@@ -1,0 +1,39 @@
+
+Parameters:
+  SubnetId:
+    Description: SubnetID for EC2
+    Type: AWS::EC2::Subnet::Id
+  SecurityGroupIds:
+    Description: List of security group id that apply to instance
+    Type: List<AWS::EC2::SecurityGroup::Id>
+Resources:
+  TestEIP:
+    Type: AWS::EC2::EIP
+    Properties: 
+      Domain: String
+      InstanceId: !Ref MyEC2Instance
+      Tags: 
+        - Key: Name
+          Value: Linh-test-elastic-ip
+
+  MyEC2Instance: 
+    Type: AWS::EC2::Instance
+    Properties: 
+      ImageId: "ami-0c02fb55956c7d316"
+      KeyName: "linh-ec2-keypair-01"
+      BlockDeviceMappings: 
+      - DeviceName: "/dev/sdm"
+        Ebs: 
+          VolumeType: "gp2"
+          DeleteOnTermination: "false"
+          VolumeSize: "20"
+      # SubnetId: String
+      # SecurityGroupIds: !Ref SecurityGroupIds
+      NetworkInterfaces: 
+      - AssociatePublicIpAddress: "true"
+        DeviceIndex: "0"
+        GroupSet: !Ref SecurityGroupIds
+        SubnetId: !Ref SubnetId
+        Tags: 
+          - Key: Name
+            Value: Linh-test-ec2

@@ -1,0 +1,2 @@
+#Run below command if your account does not have service role for ECS: AWSServiceRoleForECS
+>aws iam create-service-linked-role --aws-service-name ecs.amazonaws.com --profile <your-admin-profile>
