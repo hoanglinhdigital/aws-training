@@ -1,0 +1,6 @@
+ami           = "ami-0cff7528ff583bf9a"
+instance_type = "t2.micro"
+name          = "Day6-Demo-Instance"
+keyname = "codestar-keypair"
+subnet_id = "subnet-0c71523976a14a7eb"
+vpc_id = "vpc-0bf416dc63841708b"
