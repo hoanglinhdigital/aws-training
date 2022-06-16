@@ -1,0 +1,16 @@
+Below command is often used for deploy/modify/destroy aws resource
+
+#Plan
+>terraform plan
+
+#apply
+>terraform apply [--auto-approve]
+>>terraform apply -var-file <example.tfvars>
+
+#destroy
+>terraform destroy [--auto-approve]
+
+>terraform destroy -target <resource-type>.<logical-name>
+
+#Confirm status
+>terraform refresh

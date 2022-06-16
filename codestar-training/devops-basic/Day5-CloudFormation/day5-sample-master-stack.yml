@@ -1,0 +1,12 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: 'sample master stack of Devops class - Day5'
+
+Resources:
+  myStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: https://linh-test-cloudformation-template.s3.amazonaws.com/day5-sample-cloudformation.yml
+      Parameters:
+        env: stag
+        project: nestedprj
+        instanceType: t2.micro

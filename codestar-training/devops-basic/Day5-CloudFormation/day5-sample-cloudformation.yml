@@ -1,0 +1,97 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: 'Simple cloudformation template of Devops class - Day5'
+# Metadata: 
+
+Parameters: 
+  env:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - stag
+      - prod
+  project:
+    Type: String
+    Default: demo
+  instanceType:
+    Type: String
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - t2.small
+      - t2.medium
+
+# Mappings: 
+
+# Conditions: 
+
+Resources:
+  TestServerInstance1:
+    Type: AWS::EC2::Instance
+    Properties:
+      KeyName: codestar-keypair-singapore
+      ImageId: ami-0bd6906508e74f692
+      InstanceType: !Ref instanceType
+      SecurityGroupIds: [!Ref SSHSecurityGroup]
+      Tags:
+        - Key: Name
+          Value: !Join ["-" ,[!Ref project, !Ref env, "instance1"]]
+        - Key: project
+          Value: !Ref project
+        - Key: env
+          Value: !Ref env          
+  SSHSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      # VpcId: 'vpc-0bf416dc63841708b'
+      # GroupName: 'day5-public-sg'
+      GroupDescription: 'day5-public-sg'
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: !Join ["-" ,[!Ref project, !Ref env, "ssh-sg"]]
+        - Key: project
+          Value: !Ref project
+        - Key: env
+          Value: !Ref env  
+  TestServerInstance2:
+    Type: AWS::EC2::Instance
+    Properties:
+      KeyName: codestar-keypair-singapore
+      ImageId: ami-0bd6906508e74f692
+      InstanceType: !Ref instanceType
+      SecurityGroupIds: [!Ref WebSecurityGroup]
+      Tags:
+        - Key: Name
+          Value: !Join ["-" ,[!Ref project, !Ref env, "instance2"]]
+        - Key: project
+          Value: !Ref project
+        - Key: env
+          Value: !Ref env          
+  WebSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      # VpcId: 'vpc-0bf416dc63841708b'
+      # GroupName: 'day5-public-sg'
+      GroupDescription: 'day5-public-sg'
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: !Join ["-" ,[!Ref project, !Ref env, "web-sg"]]
+        - Key: project
+          Value: !Ref project
+        - Key: env
+          Value: !Ref env 
+Outputs:
+  publicIP1:
+    Value: !GetAtt TestServerInstance1.PublicIp
+  publicIP2:
+    Value: !GetAtt TestServerInstance2.PublicIp
