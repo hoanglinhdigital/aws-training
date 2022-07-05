@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  adminer:
+    image: 430950558682.dkr.ecr.us-east-1.amazonaws.com/devops-day10-ecr-repo:latest
+    container_name: web
+    restart: always
+    ports:
+      - "80:80"

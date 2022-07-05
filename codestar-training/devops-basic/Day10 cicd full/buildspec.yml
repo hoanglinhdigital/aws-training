@@ -1,0 +1,24 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo "1. pre build step"
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 430950558682.dkr.ecr.us-east-1.amazonaws.com
+      - docker login --username hoanglinhdigital --password uRP^NFJZp#5^iq
+    on-failure: ABORT
+  build:
+    commands:
+      - echo "2. Build step"
+      - docker build -f ./Dockerfile -t custom-nginx:latest .
+  post_build:
+    commands:
+      - echo 3. "Post build"
+      - docker tag custom-nginx:latest 430950558682.dkr.ecr.us-east-1.amazonaws.com/devops-day10-ecr-repo:latest
+      - docker push 430950558682.dkr.ecr.us-east-1.amazonaws.com/devops-day10-ecr-repo:latest
+    on-failure: ABORT
+artifacts:
+  files:
+    - codedeploy/**/*
+    - appspec.yml
+    - docker-compose.yml
+    - .env

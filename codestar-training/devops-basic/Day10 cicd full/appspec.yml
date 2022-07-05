@@ -1,0 +1,24 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ec2-user/web/
+    overwrite: purge
+file_exists_behavior: OVERWRITE
+hooks:
+  ApplicationStop:
+    - location: codedeploy/stop_server.sh
+      timeout: 300
+    - location: codedeploy/docker_cleanup.sh
+      timeout: 300      
+  AfterInstall:
+    - location: codedeploy/after_install.sh
+      timeout: 300
+  ApplicationStart:
+    - location: codedeploy/start_server.sh
+      runas: root
+      timeout: 300
+  BeforeAllowTraffic:
+    - location: codedeploy/before_allow_traffic.sh
+      runas: root
+      timeout: 60
