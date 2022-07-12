@@ -57,3 +57,7 @@ terraform.rc
 
 #Visuastudio file
 .vscode
+terraform.tfstate
+.terraform.lock.hcl
+.terraform
+terraform.tfstate.backup

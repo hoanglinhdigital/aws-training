@@ -1,0 +1,5 @@
+# Start docker compose on local pc
+>docker-compose -f .\docker-compose.dev.yml up -d
+
+# Stop docker compose
+>docker-compose -f .\docker-compose.dev.yml down

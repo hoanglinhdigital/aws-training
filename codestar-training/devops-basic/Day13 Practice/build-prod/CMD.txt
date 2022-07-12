@@ -1,0 +1,43 @@
+################# Setup Build ##################
+
+# Test build local after create docker/docker-compose file
+>docker-compose -f .\docker-compose.build.yml build
+
+# Push to ECR
+1. Create main repository (ECR)
+2. Create sub repository (ECR)
+3. Create build project
+Replace below environment variable for Build Project (Code Build)
+    ACCOUNT_ID
+    CODEBUILD_BUILD_ARN
+    AWS_REGION
+    MAIN_REPOSITORY_URI
+    SUB_REPOSITORY_URI
+4. Test build project (click Start Build)
+*Troubleshoot:
+ - Can not login to ECR 
+ -> add ecr full to role of code build.
+ - Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+ -> Edit build environment. check on  Privilege "Enable this flag if you want to build Docker images or want your builds to get elevated privileges."
+
+ ################# Production ##################
+ *NOTE: the file docker-compose.prod.yml dùng để giả lập production trên máy local, có thể skip.
+ Mục đích deploy production là tạo ra ECS Cluster, Service, Task definition từ output của quá trình build.
+ 1. Copy terraform resource từ nhánh deploy của repo.
+    Cấu hình provider và credential cho aws cli:
+    provider "aws" {
+        region = "us-east-1"
+        profile = "linhnguyen.admin"
+        shared_credentials_files = "%USERPROFILE%\\.aws\\credentials"
+    }
+    Copy thư mục task_def sang /deploy-helper của project hiện tại
+    Chỉnh sửa ecr repo link trong file "nginx-php-revision2.json"
+    php = main repo
+    nginx =  sub repo
+ 2. Deploy ECS và các resource liên quan
+    Navigate tới thư mục "deploy-helper/teraform/env/prod" , Chạy lệnh sau
+    >terraform init -upgrade
+    >terraform plan
+    >terraform apply
+ 3. Kiểm tra xem ECS service start thành công hay không?
+    Truy cập vào <IP của task>:80, <IP của task>:9000, kiểm tra xem website hiển thị OK không.
