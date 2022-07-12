@@ -1,0 +1,15 @@
+FROM nginx
+
+COPY ./deploy-helper/nginx /etc/nginx/helper
+COPY ./public /var/www/public
+COPY ./storage /var/www/storage
+
+# Note: This is environment variable in the build process
+
+ENV NGINX_HOST=server-web
+ENV NGINX_PORT=80
+
+# RUN sh /etc/nginx/helper/gen_nginx.sh
+RUN chmod -R gu+w /var/www/storage
+
+CMD [ "nginx", "-g", "daemon off;" ]

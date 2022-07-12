@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  built-nginx:
+    build:
+      context: .
+      dockerfile: deploy-helper/nginx/Dockerfile.nginx
+    ports:
+      - 8080:80
+    depends_on:
+      - php-fpm
+
+    environment:
+      - NGINX_HOST=php-fpm
+      - NGINX_PORT=80
+  php-fpm:
+    container_name: php-fpm
+    build:
+      context: .
+      dockerfile: deploy-helper/dev/Dockerfile
+
+    #command: bash -c "
+    #  php artisan key:generate 
+    #  && php artisan migrate 
+    #  && php artisan db:seed --class=DatabaseSeeder 
+    #  && php-fpm"d
+    environment:
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=taskassign
+      - DB_USERNAME=root
+      - DB_PASSWORD=12345678

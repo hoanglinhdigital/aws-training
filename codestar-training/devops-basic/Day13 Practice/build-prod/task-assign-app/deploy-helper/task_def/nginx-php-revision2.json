@@ -1,0 +1,58 @@
+[
+    {
+        "name": "php-fpm",
+        "image": "430950558682.dkr.ecr.us-east-1.amazonaws.com/day13-main-repo:latest",
+        "cpu": 0,
+        "portMappings": [
+            {
+                "containerPort": 9000,
+                "hostPort": 9000,
+                "protocol": "tcp"
+            }
+        ],
+        "essential": true,
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-create-group": "true",
+                "awslogs-group": "/ecs/nginx-php",
+                "awslogs-region": "us-east-1",
+                "awslogs-stream-prefix": "ecs"
+            },
+            "secretOptions": []
+        },
+        "systemControls": []
+    },
+    {
+        "name": "nginx",
+        "image": "430950558682.dkr.ecr.us-east-1.amazonaws.com/day13-sub-repo:latest",
+        "cpu": 0,
+        "links": [],
+        "portMappings": [
+            {
+                "containerPort": 80,
+                "hostPort": 80,
+                "protocol": "tcp"
+            }
+        ],
+        "essential": true,
+        "entryPoint": [],
+        "command": [],
+        "environment": [
+            {
+                "name": "NGINX_HOST",
+                "value": "localhost"
+            },
+            {
+                "name": "NGINX_PORT",
+                "value": "80"
+            }
+        ],
+        "dependsOn": [
+            {
+                "containerName": "php-fpm",
+                "condition": "START"
+            }
+        ]
+    }
+]

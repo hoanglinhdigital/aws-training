@@ -1,0 +1,43 @@
+version: 0.2
+
+files:
+  - source: /
+    destination: /home/ec2-user/web/
+    overwrite: purge
+    file_exists_behavior: OVERWRITE
+
+phases:
+  pre_build:
+    commands:
+      - echo "----- 1. PRE-BUILD COMMAND ---------"
+      - echo $CODEBUILD_BUILD_ARN
+      - ACCOUNT_ID=$(echo $CODEBUILD_BUILD_ARN | cut -f5 -d ':')
+      - echo "This script run from $ACCOUNT_ID"
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+
+  build:
+    commands:
+      - echo "----- 2. BUILD COMMAND ---------"
+      - echo " 2.1 Build php-fpm"
+      - docker build -f ./deploy-helper/dev/Dockerfile -t php-web:latest .
+      - echo " 2.2 Build nginx"
+      - docker build -f ./deploy-helper/nginx/Dockerfile.nginx -t built-nginx:latest .
+
+
+  post_build:
+    commands:
+      - echo "----- 3. POST-BUILD COMMAND ---------"
+      - echo "3.1 Push php-fpm to ECR ---------"
+      - docker tag php-web:latest $MAIN_REPOSITORY_URI:latest
+      - docker push $MAIN_REPOSITORY_URI:latest
+      - echo "3.2 Push built-nginx to ECR --------"
+      - docker tag built-nginx:latest $SUB_REPOSITORY_URI:latest
+      - docker push $SUB_REPOSITORY_URI:latest
+      - echo "3.3 Create image definitions --------"
+      - printf "[{\"name\":\"php-fpm\",\"imageUri\":\"$MAIN_REPOSITORY_URI:latest\"}," >> imagedefinitions.json
+      - printf "{\"name\":\"nginx\",\"imageUri\":\"$SUB_REPOSITORY_URI:latest\"}]" >> imagedefinitions.json
+      - cat imagedefinitions.json
+
+artifacts:
+  files: 
+    - 'imagedefinitions.json'

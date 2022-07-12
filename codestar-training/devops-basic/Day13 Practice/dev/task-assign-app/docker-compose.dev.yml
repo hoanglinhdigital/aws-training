@@ -1,0 +1,63 @@
+version: '3.9'
+
+services:
+  php-fpm:
+    container_name: server-web
+    build:
+      context: .
+      dockerfile: ./deploy-helper/dev/Dockerfile
+    working_dir: /var/www
+    # First run with seed
+    command: /bin/bash -c "
+      chmod -R 777 /var/www/storage
+      && php-fpm"
+    volumes:
+      - ./:/var/www
+    environment:
+      - APP_DEBUG=true
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=taskassign
+      - DB_USERNAME=root
+      - DB_PASSWORD=12345678
+  nginx:
+    image: nginx
+    ports:
+      - 8080:80
+    depends_on:
+      - php-fpm
+    volumes:
+      - ./storage/log:/var/log/nginx
+      - ./public:/var/www/public
+      - ./deploy-helper/nginx:/etc/nginx/helper
+
+    command: /bin/bash -c "sh /etc/nginx/helper/gen_nginx.sh && nginx -g 'daemon off;'"
+
+    # networks:
+    #   - web-net
+
+    environment:
+      - NGINX_HOST=server-web
+      - NGINX_PORT=80
+  db:
+    image: mariadb
+    restart: always
+    # command: --default-authentication-plugin=mysql_native_password
+    # volumes: 
+    #   - ~/mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: taskassign
+      MYSQL_ROOT_PASSWORD: 12345678
+      # MYSQL_ROOT_HOST: '%'  # needs to be enclosed with quotes
+    ports:
+      - 3306:3306
+      - 33060:33060
+
+  adminer:
+    image: adminer
+    ports:
+      - 8081:8080
+networks:
+  web-net:
+    driver: bridge
