@@ -4,11 +4,11 @@ env_code = "dev"
 region_code = "virginia"
 
 #VPC and Security Group variables
-vpc_cidr = "172.5.0.0/16"
-public_subnet_cidrs = ["172.5.1.0/24", "172.5.2.0/24" ]
-private_subnet_cidrs = ["172.5.3.0/24", "172.5.4.0/24"]
-trusted_subnet_cidrs = ["172.5.5.0/24", "172.5.6.0/24"]
-management_subnet_cidrs = ["172.5.7.0/24", "172.5.8.0/24"]
+vpc_cidr = "172.6.0.0/16"
+public_subnet_cidrs = ["172.6.1.0/24", "172.6.2.0/24" ]
+private_subnet_cidrs = ["172.6.3.0/24", "172.6.4.0/24"]
+trusted_subnet_cidrs = ["172.6.5.0/24", "172.6.6.0/24"]
+management_subnet_cidrs = ["172.6.7.0/24", "172.6.8.0/24"]
 vpc_first_availability_zone = "ap-northeast-1a"
 vpc_second_availability_zone = "ap-northeast-1c"
 management_sg_allowed_cidrs = [
@@ -18,7 +18,7 @@ management_sg_allowed_cidrs = [
 #Database variables
 db_subnet_ids = [] #get from VPC Output
 db_security_group_id = "" #get from VPC Output
-db_instance_class = "db.t3.medium"
+db_instance_class = "db.m5.large"
 db_engine = "aurora-postgresql"
 db_engine_version = "12.8"
 db_database_name = "postgresdb"

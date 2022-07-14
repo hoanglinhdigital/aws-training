@@ -31,12 +31,10 @@ variable "db_engine" {
 variable "db_engine_version" {
   description = "DB Engine version"
   type =  string
-  default = "12.8"
 }
 variable "db_database_name" {
   type = string
   description = "Database name"
-  default = "postgres-db"
 }
 variable "db_master_username" {
   description = "Master username for DB"
