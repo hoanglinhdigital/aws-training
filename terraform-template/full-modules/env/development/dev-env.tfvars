@@ -1,7 +1,7 @@
 #Comon variables
-system_code = "shingurupo"
+system_code = "mysystem"
 env_code = "dev"
-region_code = "tokyo"
+region_code = "virginia"
 #VPC and Security Group variables
 vpc_cidr = "172.5.0.0/16"
 public_subnet_cidrs = ["172.5.1.0/24", "172.5.2.0/24" ]
@@ -32,7 +32,7 @@ db_skip_final_snapshot = true
 
 #EC2 variables
 ec2_bastion_ami_id = "ami-0b7546e839d7ace12" #Amz Linux 2
-ec2_bastion_keypair = "shingurupo-dev"
+ec2_bastion_keypair = "mysystem-dev"
 ec2_bastion_instance_type = "t3.micro"
 ec2_bastion_security_group_ids = []  #get from VPC Output
 ec2_bastion_subnet_id = "" #get from VPC Output

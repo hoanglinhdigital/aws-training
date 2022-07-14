@@ -10,7 +10,7 @@ terraform {
 # Configure the AWS Provider
 provider "aws" {
   region = "us-east-1"
-  profile = "linhnguyen.admin"
+  profile = "codestar-dev-env"
   shared_credentials_file = "%USERPROFILE%\\.aws\\credentials"
 }
 

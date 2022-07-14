@@ -11,8 +11,8 @@ variable "env_code" {
 }
 variable "region_code" {
   type = string
-  description = "Code for system region, example: tokyo"
-  default = "tokyo"
+  description = "Code for system region, example: virginia"
+  default = "virginia"
 }
 #Variable for VPC and Security group
 variable "vpc_cidr" {
