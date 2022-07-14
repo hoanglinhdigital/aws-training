@@ -2,7 +2,7 @@
 variable "system_code" {
   description = "code for system"
   type = string 
-  default = "shingurupo"
+  default = "mysystem"
 }
 variable "env_code" {
   description = "code for environment"

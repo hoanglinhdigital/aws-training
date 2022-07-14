@@ -57,63 +57,63 @@ module "iam_role" {
   region_code = var.region_code
 }
 
-module "ec2-instance" {
-  source        = "../../module/ec2"
-  system_code   = var.system_code
-  env_code      = var.env_code
-  region_code = var.region_code
-  ec2_bastion_ami_id = var.ec2_bastion_ami_id
-  ec2_bastion_keypair = var.ec2_bastion_keypair
-  ec2_bastion_instance_type = var.ec2_bastion_instance_type
-  ec2_bastion_security_group_ids = [module.vpc_security_group.management_sg_id]
-  ec2_bastion_subnet_id = module.vpc_security_group.management_subnet_1_id
-  ec2_bastion_volume_size = var.ec2_bastion_volume_size
-  ec2_bastion_role_name = module.iam_role.ec2_bastion_role_name
-  depends_on = [
-    module.vpc_security_group,
-    module.iam_role
-  ]
-}
+# module "ec2-instance" {
+#   source        = "../../module/ec2"
+#   system_code   = var.system_code
+#   env_code      = var.env_code
+#   region_code = var.region_code
+#   ec2_bastion_ami_id = var.ec2_bastion_ami_id
+#   ec2_bastion_keypair = var.ec2_bastion_keypair
+#   ec2_bastion_instance_type = var.ec2_bastion_instance_type
+#   ec2_bastion_security_group_ids = [module.vpc_security_group.management_sg_id]
+#   ec2_bastion_subnet_id = module.vpc_security_group.management_subnet_1_id
+#   ec2_bastion_volume_size = var.ec2_bastion_volume_size
+#   ec2_bastion_role_name = module.iam_role.ec2_bastion_role_name
+#   depends_on = [
+#     module.vpc_security_group,
+#     module.iam_role
+#   ]
+# }
 
-module "s3-bucket" {
-  source        = "../../module/s3"
-  system_code   = var.system_code
-  env_code      = var.env_code
-  region_code = var.region_code
-  depends_on = [
-    module.vpc_security_group,
-    module.iam_role
-  ]
-}
+# module "s3-bucket" {
+#   source        = "../../module/s3"
+#   system_code   = var.system_code
+#   env_code      = var.env_code
+#   region_code = var.region_code
+#   depends_on = [
+#     module.vpc_security_group,
+#     module.iam_role
+#   ]
+# }
 
-module "sns" {
-  source        = "../../module/sns"
-  system_code   = var.system_code
-  env_code      = var.env_code
-  region_code = var.region_code
-  depends_on = [
-    module.vpc_security_group,
-    module.iam_role
-  ]
-}
+# module "sns" {
+#   source        = "../../module/sns"
+#   system_code   = var.system_code
+#   env_code      = var.env_code
+#   region_code = var.region_code
+#   depends_on = [
+#     module.vpc_security_group,
+#     module.iam_role
+#   ]
+# }
 
-module "redis_cache" {
-  source        = "../../module/redis_cache"
-  system_code   = var.system_code
-  env_code      = var.env_code
-  elasticache_subnet_ids = [module.vpc_security_group.trusted_subnet_1_id, module.vpc_security_group.trusted_subnet_2_id]
-  elasticache_security_group_ids = [module.vpc_security_group.db_sg_id]
-  elasticache_engine = var.elasticache_engine
-  elasticache_node_type = var.elasticache_node_type
-  elasticache_number_cache_node = var.elasticache_number_cache_node
-  elasticache_engine_version = var.elasticache_engine_version
-  elasticache_parameter_group = var.elasticache_parameter_group
-  elasticache_az_mode = var.elasticache_az_mode
-  depends_on = [
-    module.vpc_security_group,
-    module.iam_role
-  ]
-}
+# module "redis_cache" {
+#   source        = "../../module/redis_cache"
+#   system_code   = var.system_code
+#   env_code      = var.env_code
+#   elasticache_subnet_ids = [module.vpc_security_group.trusted_subnet_1_id, module.vpc_security_group.trusted_subnet_2_id]
+#   elasticache_security_group_ids = [module.vpc_security_group.db_sg_id]
+#   elasticache_engine = var.elasticache_engine
+#   elasticache_node_type = var.elasticache_node_type
+#   elasticache_number_cache_node = var.elasticache_number_cache_node
+#   elasticache_engine_version = var.elasticache_engine_version
+#   elasticache_parameter_group = var.elasticache_parameter_group
+#   elasticache_az_mode = var.elasticache_az_mode
+#   depends_on = [
+#     module.vpc_security_group,
+#     module.iam_role
+#   ]
+# }
 
 module "ecr" {
   source = "../../module/ecr"
@@ -166,26 +166,26 @@ module "ecs" {
   ]
 }
 
-#backup
-module "backup" {
-  source = "../../module/backup"
-  system_code   = var.system_code
-  env_code      = var.env_code
-  ec2_target_backup_instances_arn = [module.ec2-instance.ec2_bastion_linux_arn] #Get from EC2 stack 
-  ec2_daily_backup_retention = var.ec2_daily_backup_retention
-  ec2_weekly_backup_retention = var.ec2_weekly_backup_retention
-  rds_target_backup_databases_arn = [module.database.db_postgres_db_cluster_01_arn] #Get from Database stack 
-  rds_weekly_backup_retention = var.rds_weekly_backup_retention
-  ec2_weekly_backup_schedule = var.ec2_weekly_backup_schedule
-  ec2_daily_backup_schedule = var.ec2_daily_backup_schedule
-  rds_weekly_backup_schedule = var.ec2_daily_backup_schedule
-  depends_on = [
-    module.vpc_security_group,
-    module.iam_role,
-    module.database,
-    module.alb,
-    module.ec2-instance,
-    module.ecs,
+# #backup
+# module "backup" {
+#   source = "../../module/backup"
+#   system_code   = var.system_code
+#   env_code      = var.env_code
+#   ec2_target_backup_instances_arn = [module.ec2-instance.ec2_bastion_linux_arn] #Get from EC2 stack 
+#   ec2_daily_backup_retention = var.ec2_daily_backup_retention
+#   ec2_weekly_backup_retention = var.ec2_weekly_backup_retention
+#   rds_target_backup_databases_arn = [module.database.db_postgres_db_cluster_01_arn] #Get from Database stack 
+#   rds_weekly_backup_retention = var.rds_weekly_backup_retention
+#   ec2_weekly_backup_schedule = var.ec2_weekly_backup_schedule
+#   ec2_daily_backup_schedule = var.ec2_daily_backup_schedule
+#   rds_weekly_backup_schedule = var.ec2_daily_backup_schedule
+#   depends_on = [
+#     module.vpc_security_group,
+#     module.iam_role,
+#     module.database,
+#     module.alb,
+#     module.ec2-instance,
+#     module.ecs,
 
-  ]
-}
+#   ]
+# }

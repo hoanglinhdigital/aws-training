@@ -20,7 +20,7 @@ locals {
     current_region = data.aws_region.current.name
 }
 
-# tokyo-shingurupo-dev-cloudtrail-log-bucket
+# tokyo-test-dev-cloudtrail-log-bucket
 resource "aws_s3_bucket" "s3_cloud_trail_log_bucket" {
   bucket = join("-", [var.region_code, var.system_code, var.env_code, "cloudtrail-log-bucket-01"])
   acl    = "private"
@@ -47,7 +47,7 @@ resource "aws_s3_bucket" "s3_cloud_trail_log_bucket" {
 }
 
 
-# tokyo-shingurupo-dev-cloudfront-log-bucket
+# tokyo-test-dev-cloudfront-log-bucket
 resource "aws_s3_bucket" "s3_cloudfront_log_bucket" {
   bucket = join("-", [var.region_code, var.system_code, var.env_code, "cloudfront-log-bucket-01"])
   acl    = "private"
@@ -72,7 +72,7 @@ resource "aws_s3_bucket" "s3_cloudfront_log_bucket" {
     }
   }
 }
-# tokyo-shingurupo-dev-cloudwatch-log-archive-bucket
+# tokyo-test-dev-cloudwatch-log-archive-bucket
 resource "aws_s3_bucket" "s3_cloudwatch_log_archive_bucket" {
   bucket = join("-", [var.region_code, var.system_code, var.env_code, "cloudwatch-log-archive-bucket-01"])
   acl    = "private"
@@ -97,7 +97,7 @@ resource "aws_s3_bucket" "s3_cloudwatch_log_archive_bucket" {
     }
   }
 }
-# tokyo-shingurupo-dev-website-bucket	
+# tokyo-test-dev-website-bucket	
 resource "aws_s3_bucket" "s3_website_bucket" {
   bucket = join("-", [var.region_code, var.system_code, var.env_code, "website-bucket-01"])
   acl    = "private"

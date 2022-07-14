@@ -64,7 +64,7 @@ resource "aws_ecs_service" "ecs_backend_main_servcice_01" {
 
   load_balancer {
     target_group_arn = var.ecs_main_service_target_group_arn
-    container_name   = "gurupo_backend"
+    container_name   = "test_backend"
     container_port   = 3000
   }
   deployment_circuit_breaker {
@@ -92,7 +92,7 @@ resource "aws_ecs_task_definition" "ecs_backend_main_servcice_task_definition" {
   container_definitions    = <<TASK_DEFINITION
   [
     {
-      "name": "gurupo_backend",
+      "name": "test_backend",
       "image": "${var.ecr_backend_main_repository_url}",
       "cpu": ${var.ecs_main_service_cpu_limit},
       "memory": ${var.ecs_main_service_memory_limit},
@@ -129,7 +129,7 @@ resource "aws_ecs_service" "ecs_backend_sidekiq_servcice_01" {
   # Temporary disable load balance for sidekiq service.
   # load_balancer {
   #   target_group_arn = var.ecs_main_service_target_group_arn
-  #   container_name   = "gurupo_sidekiq"
+  #   container_name   = "test_sidekiq"
   #   container_port   = 80
   # }
   deployment_circuit_breaker {
@@ -156,7 +156,7 @@ resource "aws_ecs_task_definition" "ecs_backend_sidekiq_servcice_task_definition
   container_definitions    = <<TASK_DEFINITION
   [
     {
-      "name": "gurupo_sidekiq",
+      "name": "test_sidekiq",
       "image": "${var.ecr_backend_main_repository_url}",
       "cpu": ${var.ecs_main_service_cpu_limit},
       "memory": ${var.ecs_main_service_memory_limit},
