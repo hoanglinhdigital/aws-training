@@ -1,0 +1,200 @@
+@charset  utf-8;
+
+/* CSS Document */
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+background: url(http://website1gia.com//files/assets/bg.jpg);
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;
+background-attachment: fixed;
+}
+#bg { 
+position: fixed; 
+    	height: 100%;
+		width: 100%;
+		background: #000;
+		z-index: 200;
+		top: 0;
+		left: 0; 
+}
+
+.msg {
+	margin: 0 auto;
+	text-align: center;
+	font-family: 'Source Sans Pro', sans-serif;
+	color: rgb(49, 255, 0);
+	font-size: 16px;
+	text-shadow: 2px 1px black, 0 1px black, 1px 0 black, 0 -1px #166f00;
+}
+
+h1 {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 72px;
+	font-weight: lighter;
+	color: #FFF;
+	text-shadow: -1px 0 white, 3px 2px black, 1px 0 black, 0 -1px black;
+	
+}
+#divResult h2{
+    font-family: 'Source Sans Pro', sans-serif;
+	font-size: 20px;
+	color: #000;
+	font-weight: bold;
+
+}
+
+input[type=button] {
+	background: #c506ac;
+	color: #fff;
+	border: 0;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	padding: 15px 25px;
+	font-weight: 700;
+	font-size: 15px;
+	cursor: pointer;
+}
+
+#co {
+	background: #145400;
+	border: 0;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	padding: 15px 25px;
+	position: absolute;
+	left: 500px;
+	top: 300px;
+	cursor: pointer;
+	-o-transition: .5s;
+	-ms-transition: .5s;
+	-moz-transition: .5s;
+	-webkit-transition: .5s;
+	transition: .5s;
+}
+
+#co a {
+	font-family: 'Source Sans Pro', sans-serif;
+	color: #fff;
+	display: inline-block;
+	text-decoration: none;
+	font-weight: 700;
+	font-size: 15px;
+}
+
+#co:hover {
+	background: #111;
+}
+
+#form {
+	float: left;
+	background: #c506ac;
+	font-size: 19px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border: 0;
+	height: 48px;
+	width: 500px;
+	padding: 0 10px;
+	color: #fff;
+}
+
+#form:focus {
+	background: #111;
+}
+
+#gui {
+	position: absolute;
+	right: 20px;
+}
+
+#gui:hover {
+	background: #111;
+}
+
+#traloi h1 {
+    font-family: 'Source Sans Pro', sans-serif;
+	font-size: 30px;
+	color: #000;
+	font-weight: bold;
+}
+#traloi p {
+    font-family: 'Source Sans Pro', sans-serif;
+	font-size: 20px;
+	color: #000;
+	font-weight: bold;
+}
+#divResult2 p {
+    font-family: 'Source Sans Pro', sans-serif;
+	font-size: 20px;
+	color: #000;
+	font-weight: bold;
+}
+#divResult3 p {
+    font-family: 'Source Sans Pro', sans-serif;
+	font-size: 20px;
+	color: #000;
+	font-weight: bold;
+}
+
+#dialog-overlay {
+	width:100%; 
+	height:100%;
+	background:#000; 
+	position:absolute; 
+	top:0; left:0; 
+	z-index:3000; 
+	display:none;
+}
+
+
+#dialog-box {
+	background:#eee;
+	width:328px; 
+	position:absolute; 
+	z-index:5000; 
+	display:none;
+}
+
+#dialog-box .dialog-content {
+
+	text-align:left; 
+	padding:10px; 
+	margin:13px;
+	color:#666; 
+	font-size:15px; 
+}
+
+#dialog-box .dialog-content p {
+    font-family: 'Source Sans Pro', sans-serif;
+	font-weight:700; 
+	margin:0;
+}
+
+#dialog-box .dialog-content ul {
+	margin:10px 0 10px 20px; 
+	padding:0; 
+	height:100px;
+}
+#msb-nt{
+	background: #06c542;
+	border: 0;
+	width: 40px;
+	margin-left: auto;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	padding: 10px;
+	cursor: pointer;
+}
+#dialog-box .dialog-content a{
+	font-family: 'Source Sans Pro', sans-serif;
+	color: #fff;
+	display: inline-block;
+	text-decoration: none;
+	font-weight: 700;
+	font-size: 15px;
+}
