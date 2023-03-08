@@ -6,14 +6,6 @@ s3 = boto3.client('s3')
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('employee')
 
-def generate_id():
-    return uuid.uuid1()
-
-def batch_insert(items, dynamodb_table):
-    with dynamodb_table.batch_writer() as batch:
-        for r in items:
-            batch.put_item(Item=r)
-
 def lambda_handler(event, context):
     # TODO implement
     # get the S3 bucket and file name from the event object
