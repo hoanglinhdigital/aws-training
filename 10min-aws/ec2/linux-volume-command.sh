@@ -11,7 +11,7 @@ sudo mkfs -t xfs /dev/xvdf1
 #Mount
 sudo mount /dev/xvdf1 /data
 
-#Grow part after extend EBS
+#Grow part after extend EBS volume on AWS Console.
 sudo growpart /dev/xvdf 1
 
 #=====Mount a EBS volume created from snapshot to recover data=====
